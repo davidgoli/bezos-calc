@@ -14,7 +14,12 @@
     "test": "jest"
   },
   "eslintConfig": {
-    "extends": "eslint-config-synacor"
+    "extends": "eslint-config-synacor",
+    "rules": {
+      "quotes": ["error", "single"],
+      "semi": ["error", "never"],
+      "react/display-name": "off"
+    }
   },
   "eslintIgnore": [
     "build/*"
@@ -33,6 +38,7 @@
     "serve": "^11.1.0"
   },
   "dependencies": {
+    "bloombill": "0.0.1",
     "preact": "^10.0.1",
     "preact-render-to-string": "^5.1.0",
     "preact-router": "^3.0.0"
