@@ -34,12 +34,12 @@ const DAILY_REVENUE_2018_START = mean(AMAZON_REVENUE_2017, AMAZON_REVENUE_2018) 
 const SECONDLY_REVENUE_2018_START = DAILY_REVENUE_2018_START / SECONDS_IN_DAY
 // const AMAZON_ANNUAL_REVENUE_GROWTH_2018 = 1.3
 const AMAZON_2018_YOY_INCREASE = 0.3093
-const DAILY_REVENUE_GROWTH = 1 + (AMAZON_2018_YOY_INCREASE / DAYS_IN_YEAR)
-const SECONDLY_REVENUE_GROWTH = 1 + (AMAZON_2018_YOY_INCREASE / SECONDS_IN_YEAR)
+const DAILY_REVENUE_GROWTH = Math.pow(1 + AMAZON_2018_YOY_INCREASE, 1 / DAYS_IN_YEAR)
+const SECONDLY_REVENUE_GROWTH = Math.pow(1 + AMAZON_2018_YOY_INCREASE, 1/SECONDS_IN_YEAR)
+const SG = 1 + (AMAZON_2018_YOY_INCREASE / SECONDS_IN_YEAR)
 
 const revenueOfDay = (date) => DAILY_REVENUE_2018_START * DAILY_REVENUE_GROWTH ** daysInInterval(date - START_2018)
 const revenueOfSecond = (date) => SECONDLY_REVENUE_2018_START * SECONDLY_REVENUE_GROWTH ** secondsInInterval(date - START_2018)
-const revenueIntegral = (date) => SECONDLY_REVENUE_2018_START * SECONDLY_REVENUE_GROWTH ** secondsInInterval(date - START_2018) / Math.exp(SECONDLY_REVENUE_GROWTH)
 // const revenueIntegralDay = (date) => DAILY_REVENUE_2018_START * DAILY_REVENUE_GROWTH ** daysInInterval(date - START_2018) / Math.exp(DAILY_REVENUE_GROWTH)
 // const totalRevenueBetween = (lowerDate, upperDate) => revenueIntegral(upperDate) - revenueIntegral(lowerDate) * secondsInInterval(upperDate - lowerDate)
 const totalRevenueBetween = (lowerDate, upperDate) => mean(revenueOfSecond(upperDate), revenueOfSecond(lowerDate)) * secondsInInterval(upperDate - lowerDate)
@@ -55,7 +55,7 @@ for (let i=0; i<365; i++) {
 }
 
 console.log('daily growth', DAILY_REVENUE_GROWTH)
-console.log('secondly growth', SECONDLY_REVENUE_GROWTH)
+console.log('secondly growth', SECONDLY_REVENUE_GROWTH, SG)
 console.log('estTotalRevenue', formatCurrency(estTotalRevenue))
 console.log('actual total revenue', formatCurrency(AMAZON_REVENUE_2017 * (1+AMAZON_2018_YOY_INCREASE)))
 console.log('rpd start', formatCurrency(revenueOfDay(START_2018)))
@@ -109,9 +109,7 @@ export const App = () => {
 	return (<div id="app">
 		<h1>Net worth of Jeff Bezos: {formatCurrency(netWorth)}</h1>
 		<h2>Amazon total revenue since Head Tax Day: {formatCurrency(totalRevenue)}</h2>
-		<h2>Amazon daily revenue, last 24 hours: {formatCurrency(revenueOfDay(new Date()))}</h2>
 		<h2>Amazon revenue since you visited this page: {formatCurrency(totalRevenueBetween(PAGE_LOAD_DATE, new Date()))}</h2>
-		<h2>Amazon revenue, last second: {formatCurrency(revenueOfSecond(new Date()))}</h2>
 		<h2>How much Head Tax revenue Amazon would have paid: {formatCurrency(headTaxRevenue)} ({pctOfRevenue.toFixed(4)}% of revenue)</h2>
 		<h2>Total Head Tax revenue from all companies in Seattle: {formatCurrency(headTaxRevenue / AMAZON_HEAD_TAX_PCT)}</h2>
 		<h2>Affordable housing units lost: {affordableUnits}</h2>
