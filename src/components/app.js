@@ -12,7 +12,7 @@ const EARNINGS_PER_SECOND = 2489
 const AMAZON_SEATTLE_EMPLOYEES = 50000
 const ANNUAL_HEAD_TAX_REVENUE = 500
 const HEAD_TAX_REVENUE_PER_SECOND = ANNUAL_HEAD_TAX_REVENUE / 365 / 24 / 60 / 60
-const HEAD_TAX_START_DATE = new Date('May 18, 2018')
+const HEAD_TAX_START_DATE = new Date('June 12, 2018')
 const AMAZON_HEAD_TAX_PCT = 0.3
 
 // https://www.king5.com/article/news/local/building-affordable-housing-in-seattle-isnt-cheap/281-552498112
@@ -108,9 +108,9 @@ export const App = () => {
 
 	return (<div id="app">
 		<h1>Net worth of Jeff Bezos: {formatCurrency(netWorth)}</h1>
-		<h2>Amazon total revenue since Head Tax Day: {formatCurrency(totalRevenue)}</h2>
 		<h2>Amazon revenue since you visited this page: {formatCurrency(totalRevenueBetween(PAGE_LOAD_DATE, new Date()))}</h2>
-		<h2>How much Head Tax revenue Amazon would have paid: {formatCurrency(headTaxRevenue)} ({pctOfRevenue.toFixed(4)}% of revenue)</h2>
+		<h2>Amazon total revenue since Head Tax Repeal Day (June 12, 2018): {formatCurrency(totalRevenue)}</h2>
+		<h2>Amount of Head Tax Amazon would have paid: {formatCurrency(headTaxRevenue)} ({pctOfRevenue.toFixed(4)}% of revenue)</h2>
 		<h2>Total Head Tax revenue from all companies in Seattle: {formatCurrency(headTaxRevenue / AMAZON_HEAD_TAX_PCT)}</h2>
 		<h2>Affordable housing units lost: {affordableUnits}</h2>
 
