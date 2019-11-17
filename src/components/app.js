@@ -113,5 +113,31 @@ export const App = () => {
 		<h2>How much Head Tax revenue Amazon would have paid: {formatCurrency(headTaxRevenue)} ({pctOfRevenue.toFixed(4)}% of revenue)</h2>
 		<h2>Total Head Tax revenue from all companies in Seattle: {formatCurrency(headTaxRevenue / AMAZON_HEAD_TAX_PCT)}</h2>
 		<h2>Affordable housing units lost: {affordableUnits}</h2>
+
+		<footer style={styles.footer}>
+			<ul>
+				<li>
+					<a href="https://www.forbes.com/forbes-400/#15901be67e2f">Jeff Bezos net worth</a>
+				</li>
+				<li>
+					<a href="https://www.businessinsider.com/what-amazon-ceo-jeff-bezos-makes-every-day-hour-minute-2018-10">Jeff Bezos revenue per second</a>
+				</li>
+				<li>
+					<a href="https://www.king5.com/article/news/local/building-affordable-housing-in-seattle-isnt-cheap/281-552498112">Affordable housing cost per unit</a>
+				</li>
+				<li>
+					<a href="https://www.macrotrends.net/stocks/charts/AMZN/amazon/revenue">Amazon annual revenue</a>
+				</li>
+			</ul>
+		</footer>
 	</div>)
+}
+
+const styles = {
+	footer: {
+		position: 'fixed',
+		bottom: 0,
+		textAlign: 'left',
+		fontSize: '0.8em'
+	}
 }
