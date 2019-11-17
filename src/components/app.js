@@ -69,7 +69,7 @@ console.log('growthfact ht', SECONDLY_REVENUE_GROWTH ** secondsInInterval(HEAD_T
 console.log('days since start', daysInInterval(new Date() - START_2018))
 
 export const App = () => {
-	const { response, loading, error } = useFetch('https://forbes400.herokuapp.com/api/forbes400?limit=10')
+	const { response, loading, error } = useFetch('https://forbes400.herokuapp.com/api/forbes400?limit=3')
 
 	const [netWorth, setNetWorth] = useState(0)
 	const [headTaxRevenue, setHeadTaxRevenue] = useState(0)
@@ -96,6 +96,12 @@ export const App = () => {
 	}
 
 	const bezos = findJeff(response)
+	if (!bezos) {
+		return (<div>
+			<h1>Good job, apparently Bezos has dropped out of the top 3 billionaires!</h1>
+			<h2>New top billionaire: {response[0].person.name}</h2>
+		</div>)
+	}
 	if (netWorth === 0) {
 		setNetWorth(bezos.finalWorth * 1000)
 	}
