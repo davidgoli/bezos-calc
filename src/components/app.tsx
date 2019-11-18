@@ -113,7 +113,7 @@ const styles = {
   }
 } as const
 
-export const App: FunctionComponent  = () => {
+export const App: FunctionComponent = () => {
   const { response, loading, error } = useFetch(
     'https://forbes400.herokuapp.com/api/forbes400?limit=3'
   )
