@@ -48,10 +48,10 @@ const PAGE_LOAD_DATE = new Date()
 
 let estTotalRevenue = 0
 for (let i=0; i<365; i++) {
-	const date = new Date((i * SECONDS_IN_DAY * 1000) + START_2018.getTime())
-	const dailyRev = revenueOfDay(date)
-	estTotalRevenue += dailyRev
-	// console.log('elapsed rev', date, dailyRev)//, daysInInterval(date - START_2018), Math.pow(DAILY_REVENUE_GROWTH, daysInInterval(date - START_2018)), estTotalRevenue)
+  const date = new Date((i * SECONDS_IN_DAY * 1000) + START_2018.getTime())
+  const dailyRev = revenueOfDay(date)
+  estTotalRevenue += dailyRev
+  // console.log('elapsed rev', date, dailyRev)//, daysInInterval(date - START_2018), Math.pow(DAILY_REVENUE_GROWTH, daysInInterval(date - START_2018)), estTotalRevenue)
 }
 
 console.log('daily growth', DAILY_REVENUE_GROWTH)
@@ -69,81 +69,81 @@ console.log('growthfact ht', SECONDLY_REVENUE_GROWTH ** secondsInInterval(HEAD_T
 console.log('days since start', daysInInterval(new Date() - START_2018))
 
 export const App = () => {
-	const { response, loading, error } = useFetch('https://forbes400.herokuapp.com/api/forbes400?limit=3')
+  const { response, loading, error } = useFetch('https://forbes400.herokuapp.com/api/forbes400?limit=3')
 
-	const [netWorth, setNetWorth] = useState(0)
-	const [headTaxRevenue, setHeadTaxRevenue] = useState(0)
+  const [netWorth, setNetWorth] = useState(0)
+  const [headTaxRevenue, setHeadTaxRevenue] = useState(0)
 
-	useEffect(() => {
-		setTimeout(() => {
-			if (netWorth === 0) {
-				return
-			}
+  useEffect(() => {
+    setTimeout(() => {
+      if (netWorth === 0) {
+        return
+      }
 
-			const secondsOfHeadTax = (new Date() - HEAD_TAX_START_DATE) / 1000
-			setHeadTaxRevenue(AMAZON_SEATTLE_EMPLOYEES * HEAD_TAX_REVENUE_PER_SECOND * secondsOfHeadTax)
-			setNetWorth(netWorth + EARNINGS_PER_SECOND)
-		}, 1000)
-	}, [netWorth])
+      const secondsOfHeadTax = (new Date() - HEAD_TAX_START_DATE) / 1000
+      setHeadTaxRevenue(AMAZON_SEATTLE_EMPLOYEES * HEAD_TAX_REVENUE_PER_SECOND * secondsOfHeadTax)
+      setNetWorth(netWorth + EARNINGS_PER_SECOND)
+    }, 1000)
+  }, [netWorth])
 
-	if (loading) {
-		return <div>Loading...</div>
-	}
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
-	if (error) {
-		console.error(error)
-		return <div>Error: {error}</div>
-	}
+  if (error) {
+    console.error(error)
+    return <div>Error: {error}</div>
+  }
 
-	const bezos = findJeff(response)
-	if (!bezos) {
-		return (<div>
-			<h1>Good job, apparently Bezos has dropped out of the top 3 billionaires!</h1>
-			<h2>New top billionaire: {response[0].person.name}</h2>
-		</div>)
-	}
-	if (netWorth === 0) {
-		setNetWorth(bezos.finalWorth * 1000)
-	}
-	// console.log(bezos)
+  const bezos = findJeff(response)
+  if (!bezos) {
+    return (<div>
+      <h1>Good job, apparently Bezos has dropped out of the top 3 billionaires!</h1>
+      <h2>New top billionaire: {response[0].person.name}</h2>
+    </div>)
+  }
+  if (netWorth === 0) {
+    setNetWorth(bezos.finalWorth * 1000)
+  }
+  // console.log(bezos)
 
-	const totalHTRevenue = headTaxRevenue / AMAZON_HEAD_TAX_PCT
-	const affordableUnits = Math.floor(totalHTRevenue / AFFORDABLE_HOUSING_UNIT_COST)
-	const totalRevenue = totalRevenueBetween(HEAD_TAX_START_DATE, new Date())
-	const pctOfRevenue = headTaxRevenue * 100 / totalRevenue
+  const totalHTRevenue = headTaxRevenue / AMAZON_HEAD_TAX_PCT
+  const affordableUnits = Math.floor(totalHTRevenue / AFFORDABLE_HOUSING_UNIT_COST)
+  const totalRevenue = totalRevenueBetween(HEAD_TAX_START_DATE, new Date())
+  const pctOfRevenue = headTaxRevenue * 100 / totalRevenue
 
-	return (<div id="app">
-		<h1>Net worth of Jeff Bezos: {formatCurrency(netWorth)}</h1>
-		<h2>Amazon revenue since you visited this page: {formatCurrency(totalRevenueBetween(PAGE_LOAD_DATE, new Date()))}</h2>
-		<h2>Amazon total revenue since Head Tax Repeal Day (June 12, 2018): {formatCurrency(totalRevenue)}</h2>
-		<h2>Amount of Head Tax Amazon would have paid: {formatCurrency(headTaxRevenue)} ({pctOfRevenue.toFixed(4)}% of revenue)</h2>
-		<h2>Total Head Tax revenue from all companies in Seattle: {formatCurrency(headTaxRevenue / AMAZON_HEAD_TAX_PCT)}</h2>
-		<h2>Affordable housing units lost: {affordableUnits}</h2>
+  return (<div id="app">
+    <h1>Net worth of Jeff Bezos: {formatCurrency(netWorth)}</h1>
+    <h2>Amazon revenue since you visited this page: {formatCurrency(totalRevenueBetween(PAGE_LOAD_DATE, new Date()))}</h2>
+    <h2>Amazon total revenue since Head Tax Repeal Day (June 12, 2018): {formatCurrency(totalRevenue)}</h2>
+    <h2>Amount of Head Tax Amazon would have paid: {formatCurrency(headTaxRevenue)} ({pctOfRevenue.toFixed(4)}% of revenue)</h2>
+    <h2>Total Head Tax revenue from all companies in Seattle: {formatCurrency(headTaxRevenue / AMAZON_HEAD_TAX_PCT)}</h2>
+    <h2>Affordable housing units lost: {affordableUnits}</h2>
 
-		<footer style={styles.footer}>
-			<ul>
-				<li>
-					<a href="https://www.forbes.com/forbes-400/#15901be67e2f">Jeff Bezos net worth</a>
-				</li>
-				<li>
-					<a href="https://www.businessinsider.com/what-amazon-ceo-jeff-bezos-makes-every-day-hour-minute-2018-10">Jeff Bezos revenue per second</a>
-				</li>
-				<li>
-					<a href="https://www.king5.com/article/news/local/building-affordable-housing-in-seattle-isnt-cheap/281-552498112">Affordable housing cost per unit</a>
-				</li>
-				<li>
-					<a href="https://www.macrotrends.net/stocks/charts/AMZN/amazon/revenue">Amazon annual revenue</a>
-				</li>
-			</ul>
-		</footer>
-	</div>)
+    <footer style={styles.footer}>
+      <ul>
+        <li>
+          <a href="https://www.forbes.com/forbes-400/#15901be67e2f">Jeff Bezos net worth</a>
+        </li>
+        <li>
+          <a href="https://www.businessinsider.com/what-amazon-ceo-jeff-bezos-makes-every-day-hour-minute-2018-10">Jeff Bezos revenue per second</a>
+        </li>
+        <li>
+          <a href="https://www.king5.com/article/news/local/building-affordable-housing-in-seattle-isnt-cheap/281-552498112">Affordable housing cost per unit</a>
+        </li>
+        <li>
+          <a href="https://www.macrotrends.net/stocks/charts/AMZN/amazon/revenue">Amazon annual revenue</a>
+        </li>
+      </ul>
+    </footer>
+  </div>)
 }
 
 const styles = {
-	footer: {
-		position: 'fixed',
-		bottom: 0,
-		textAlign: 'left',
-		fontSize: '0.8em'
-	}
+  footer: {
+    position: 'fixed',
+    bottom: 0,
+    textAlign: 'left',
+    fontSize: '0.8em'
+  }
 }

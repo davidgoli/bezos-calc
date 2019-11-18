@@ -10,7 +10,7 @@
     "build": "preact build",
     "serve": "preact build && serve build --single",
     "dev": "preact watch",
-    "lint": "eslint src",
+    "lint": "eslint src --fix",
     "test": "jest"
   },
   "eslintConfig": {
@@ -24,6 +24,8 @@
         "error",
         "never"
       ],
+      "indent": ["error", 2],
+      "no-tabs": "error",
       "react/display-name": "off"
     }
   },
@@ -33,7 +35,7 @@
   "devDependencies": {
     "enzyme": "^3.10.0",
     "enzyme-adapter-preact-pure": "^2.0.0",
-    "eslint": "^6.0.1",
+    "eslint": "^6.6.0",
     "eslint-config-synacor": "^3.0.4",
     "fetch-mock": "^8.0.0",
     "identity-obj-proxy": "^3.0.0",
